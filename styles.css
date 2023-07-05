@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    margin: 50px auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 44px;
+}
+h5 {
+    font-size: 33px;
+}
