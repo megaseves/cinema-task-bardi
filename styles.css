@@ -6,6 +6,11 @@
 body {
     margin: 50px auto;
     text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
@@ -13,4 +18,65 @@ h1 {
 }
 h5 {
     font-size: 33px;
+}
+.seats-container {
+    margin-top: 30px;
+    padding: 20px;
+    max-width: 1024px;
+    color: white;
+
+    gap: 10px;
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+    -ms-flex-direction: column;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    display: -webkit-box;
+    display: flex;
+}
+
+.seat {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+.seatFree {
+    background-color: green;
+}
+.seatReserved {
+    background-color: orange;
+}
+.seatSold {
+    background-color: gray;
+}
+
+/* COLOUR DESCRIPTION */
+.description {
+    display: flex;
+    gap: 30px;
+}
+.sign-div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.free-sign {
+    width: 14px;
+    height: 14px;
+    background-color: green;
+}
+.sold-sign {
+    width: 14px;
+    height: 14px;
+    background-color: gray;
+}
+.reserved-sign {
+    width: 14px;
+    height: 14px;
+    background-color: orange;
 }
