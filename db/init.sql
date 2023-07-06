@@ -12,7 +12,7 @@ CREATE TABLE users (
 CREATE TABLE seats (
     seat_id INT AUTO_INCREMENT PRIMARY KEY,
     status VARCHAR(10) NOT NULL,
-    user_id INT
+    user_email VARCHAR(50)
 );
 
 
@@ -30,7 +30,7 @@ BEGIN
     SET @free = 1;
 
     WHILE @i <= (maxSeat-freeSeat) DO
-            INSERT INTO `seats` (status, user_id) VALUES ('sold', 1);
+            INSERT INTO `seats` (status, user_email) VALUES ('sold', 'megaseves@gmail.com');
             SET @i = @i + 1;
         END WHILE;
     WHILE @free <= freeSeat DO
