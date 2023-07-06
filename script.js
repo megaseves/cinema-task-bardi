@@ -30,6 +30,7 @@ function createElements(data) {
         seatDiv.append(seatId);
 
         seatDiv.classList.add("seat");
+        seatDiv.dataset.button = "button";
         (seat.status === 'sold') && seatDiv.classList.add("seatSold");
         (seat.status === 'free') && seatDiv.classList.add("seatFree");
         (seat.status === 'reserved') && seatDiv.classList.add("seatReserved");
@@ -42,8 +43,45 @@ function createElements(data) {
     });
 }
 
+
 refreshData();
-setInterval(refreshData, 5000);
+setInterval(refreshData, 1000); // 1000 ms = 1 másodperc
+
+
+window.onload = function() {
+    clickableDivs();
+    setInterval(clickableDivs, 100);
+};
+
+function clickableDivs() {
+    const divElements = document.querySelectorAll('[data-id]');
+    const buttonPressed = e => {
+        const seatNumber = Number.parseInt(e.target.innerText);
+        let requestBody = {
+            id: seatNumber
+        }
+            fetch("http://localhost:5000/api/v1/posts/reserve", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            }).then(r => {
+                    if (r.status === 200) {
+                        console.log('Success')
+                    } else {
+                        const errorContainer = document.querySelector('.error-message');
+                        errorContainer.innerText = `Nem sikerült lefoglalni a ${seatNumber} számon lévő széket!`
+                    }
+                }
+            )
+
+    }
+
+    for (let elem of divElements) {
+        elem.addEventListener("click", buttonPressed);
+    }
+}
 
 
 /*

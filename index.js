@@ -10,6 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/v1/posts", postsRouter)
 
+
 app.listen(PORT, () => {
     console.log(`SERVER: http://localhost:${PORT}`);
 });
