@@ -47,7 +47,6 @@ function createElements(data) {
 
 
 refreshData();
-/*setInterval(refreshData, 1000); // 1000 ms = 1 másodperc*/
 setInterval(errorMessageClean, 3000);
 setInterval(loopingFunctions, 1000);
 
@@ -141,13 +140,6 @@ function submitForm(event) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:5000/api/v1/posts/buy");
     xhr.setRequestHeader("Content-Type", "application/json");
-   /* xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            let response = JSON.parse(xhr.responseText);
-            // Kezeld a választ itt
-            console.log(response);
-        }
-    };*/
     xhr.send(JSON.stringify(data));
 
 }

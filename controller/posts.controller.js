@@ -1,4 +1,5 @@
 const pool = require("../db/dbconnection");
+const nodemailer = require("nodemailer");
 let TOKEN = randomNumber();
 let WAITING_TIME = 120000;
 
@@ -64,7 +65,8 @@ const postsController = {
                 pool.query(sql, ['sold', email, seat.seatNumber])
             })
 
-            console.log('UGYAN AZ A TOKEN YEAAAAAAAA')
+            emailSender(email);
+
             res.send('Succes')
         } else {
             console.log('NO NO NO')
@@ -73,6 +75,32 @@ const postsController = {
 
 
     }
+}
+
+function emailSender(email) {
+    let mailTransporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "emailsenderfromnodejsapp@gmail.com",
+            pass: "aasuzrliwamqjhdl"
+        }
+    });
+
+    let details = {
+        from: "emailsenderfromnodejsapp@gmail.com",
+        to: `${email}`,
+        subject: "Bardi - Cinema",
+        text: "Köszönjük a vásárlást!"
+    }
+
+    mailTransporter.sendMail(details, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send('Success');
+            console.log('Email has sent');
+        }
+    })
 }
 
 module.exports = postsController;

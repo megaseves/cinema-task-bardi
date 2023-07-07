@@ -6,7 +6,6 @@ const PORT = 5000;
 
 const postsRouter = require("./routes/posts.router");
 
-
 app.use(cors());
 app.use(express.json());
 app.use("/api/v1/posts", postsRouter)
