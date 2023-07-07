@@ -1,4 +1,10 @@
-const pool = require("../db/dbconnection")
+const pool = require("../db/dbconnection");
+let TOKEN = randomNumber();
+let WAITING_TIME = 120000;
+
+function randomNumber() {
+    return Math.floor(Math.random() * (1000000 - 1 + 1)) + 1;
+}
 
 const postsController = {
     getAll: async (req, res) => {
@@ -24,8 +30,11 @@ const postsController = {
         if (status && status === 'free') {
             const sql = "UPDATE seats SET status = ? WHERE seat_id = ?";
             const [rows, fields] = await pool.query(sql, ['reserved', seatNumber]);
-            // TODO make the token RANDOM
-            res.send({token: 12345});
+
+            const randomToken = randomNumber();
+            TOKEN = randomToken;
+            console.log(TOKEN);
+            res.send({token: randomToken});
 
             setTimeout(async () => {
                 const seatQuery = "SELECT status FROM seats WHERE seat_id = ?"
@@ -35,13 +44,33 @@ const postsController = {
                 if (status && status === 'reserved') {
                     const sql = "UPDATE seats SET status = ? WHERE seat_id = ?"
                     const [rows, fields] = await pool.query(sql, ['free', seatNumber])
+                    TOKEN = randomNumber();
                 }
-            }, 15000);
+            }, WAITING_TIME);
 
             /*res.send('success');*/
         } else {
             res.status(400).send('error');
         }
+    },
+    buySeat: async (req, res) => {
+        const seats = req.body.seat_ids;
+        const token = req.body.token | 0;
+        const email = req.body.email;
+        if (token === TOKEN) {
+
+            seats.forEach(seat => {
+                const sql = "UPDATE seats SET status = ?, user_email = ? WHERE seat_id = ?"
+                pool.query(sql, ['sold', email, seat.seatNumber])
+            })
+
+            console.log('UGYAN AZ A TOKEN YEAAAAAAAA')
+            res.send('Succes')
+        } else {
+            console.log('NO NO NO')
+            res.send('error')
+        }
+
 
     }
 }

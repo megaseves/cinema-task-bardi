@@ -59,6 +59,7 @@ h5 {
 .description {
     display: flex;
     gap: 30px;
+    margin-bottom: 30px;
 }
 .sign-div {
     display: flex;
